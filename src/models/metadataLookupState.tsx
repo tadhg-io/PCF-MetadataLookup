@@ -8,9 +8,7 @@ export interface IMetadataLookupState {
     // inputs
     lookupType: lookupTypes,
     targetField: string,
-    tableTypeSource: tableTypeSources,
-    staticTableName: string,
-    dynamicTableNameSource: string,
+    tableNameforColumnLookup: string,
     
     // local variables
     tables?: ITable[],

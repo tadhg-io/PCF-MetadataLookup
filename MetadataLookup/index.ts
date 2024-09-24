@@ -1,6 +1,9 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import { HelloWorld, IHelloWorldProps } from "./HelloWorld";
 import * as React from "react";
+import { MetadataLookupControl } from "../src/components/metadataLookupControl";
+import { IMetadataLookupProps } from "../src/models/metadataLookupState";
+import { lookupTypes } from "../src/constants";
 
 export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
@@ -32,9 +35,13 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const props: IHelloWorldProps = { name: 'Hello, World!' };
+        const props: IMetadataLookupProps = { 
+            lookupType: lookupTypes.table,
+            targetField: "toc_fieldname",
+            tableNameforColumnLookup: "toc_table"
+         };
         return React.createElement(
-            HelloWorld, props
+            MetadataLookupControl, props
         );
     }
 

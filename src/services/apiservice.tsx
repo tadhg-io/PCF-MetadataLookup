@@ -10,6 +10,23 @@ export class ApiService {
     }
 
     public getTables = async (): Promise<any> => { 
+
+        // TEMP for local testing
+        return [{
+            logicalname: "account",
+            originallocalizedname: "account",
+            name: "Account"
+        }, 
+        {
+            logicalname: "contact",
+            originallocalizedname: "contact",
+            name: "Contact"
+        }, 
+        {
+            logicalname: "user",
+            originallocalizedname: "user",
+            name: "User"
+        }]
         
         var fetchXml = [
             "<fetch>",
