@@ -19,7 +19,7 @@ export class MetadataLookupControl extends React.Component<IMetadataLookupProps,
       // inputs
       lookupType: props.lookupType,
       targetField: props.targetField,
-      tableNameforColumnLookup: props.tableNameforColumnLookup,
+      tableName: props.tableName,
       selectedValue: props.selectedValue
     };
   }

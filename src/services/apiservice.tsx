@@ -11,6 +11,22 @@ export class ApiService {
 
     public getTables = async (): Promise<any> => { 
 
+        
+        var fetchXml = [
+            "<fetch>",
+            "  <entity name='entity'>",
+            "    <attribute name='logicalname' />",
+            "    <attribute name='originallocalizedname' />",
+            "    <attribute name='name' />",
+            "    <order attribute='logicalname' />",
+            "  </entity>",
+            "</fetch>",
+        ].join("");
+
+        let odataUrl = `?fetchXml=${fetchXml}`;
+        let results = this._context.webAPI.retrieveMultipleRecords("entity", odataUrl);    
+-       console.log('RESULTS', results);
+        
         // TEMP for local testing
         return [{
             logicalname: "account",
@@ -27,20 +43,7 @@ export class ApiService {
             originallocalizedname: "user",
             name: "User"
         }]
-        
-        var fetchXml = [
-            "<fetch>",
-            "  <entity name='entity'>",
-            "    <attribute name='logicalname' />",
-            "    <attribute name='originallocalizedname' />",
-            "    <attribute name='name' />",
-            "    <order attribute='logicalname' />",
-            "  </entity>",
-            "</fetch>",
-        ].join("");
 
-        let odataUrl = `?fetchXml=${fetchXml}`;
-        return this._context.webAPI.retrieveMultipleRecords("entity", odataUrl);    
     };
 
     public getColumns = async (entity: string): Promise<any> => { 

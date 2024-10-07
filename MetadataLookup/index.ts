@@ -4,10 +4,22 @@ import * as React from "react";
 import { MetadataLookupControl } from "../src/components/metadataLookupControl";
 import { IMetadataLookupProps } from "../src/models/metadataLookupState";
 import { lookupTypes } from "../src/constants";
+import { ApiService } from "../src/services/apiservice";
 
 export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, IOutputs> {
     private theComponent: ComponentFramework.ReactControl<IInputs, IOutputs>;
     private notifyOutputChanged: () => void;
+	private _context: ComponentFramework.Context<IInputs>;
+	private _apiService: ApiService;
+    
+	// set defaults for container state
+	private props: IMetadataLookupProps = {
+		isLoading: false,
+		lookupType: lookupTypes.table,
+		targetField: "",
+        tableName: "",
+		fieldChanged: this.fieldChanged.bind(this),
+	}
 
     /**
      * Empty constructor.
@@ -27,6 +39,24 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
         state: ComponentFramework.Dictionary
     ): void {
         this.notifyOutputChanged = notifyOutputChanged;
+        
+		this._context = context;
+		this._apiService = new ApiService(this._context);
+        
+        let currentPageContext = context as any;
+		currentPageContext = currentPageContext ? currentPageContext["page"] : undefined;
+		if (currentPageContext && currentPageContext.entityId) {
+			this.props.context = this._context;
+			this.props.apiService = this._apiService;
+		}
+		
+		// get the inputs from the form setup
+		this.props.lookupType = <lookupTypes>context.parameters.LookupType.raw || "";
+		this.props.targetField = context.parameters.TargetField.raw || "";
+		this.props.tableName = context.parameters.TableName.raw || "0";
+
+		// set the api service to pass through to the component
+		this.props.apiService = this._apiService;
     }
 
     /**
@@ -38,7 +68,7 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
         const props: IMetadataLookupProps = { 
             lookupType: lookupTypes.table,
             targetField: "toc_fieldname",
-            tableNameforColumnLookup: "toc_table"
+            tableName: "toc_table"
          };
         return React.createElement(
             MetadataLookupControl, props
@@ -60,4 +90,10 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
     public destroy(): void {
         // Add code to cleanup control if necessary
     }
+
+    
+	private fieldChanged(selectedValue?: string) {
+		this.props.selectedValue = selectedValue;
+		this.notifyOutputChanged();
+	}
 }

@@ -1,4 +1,4 @@
-import { lookupTypes, tableTypeSources } from "../constants";
+import { lookupTypes } from "../constants";
 import { IInputs } from "../../metadataLookup/generated/ManifestTypes";
 import { ApiService } from "../services/apiservice";
 import { ITable } from "./table";
@@ -8,7 +8,7 @@ export interface IMetadataLookupState {
     // inputs
     lookupType: lookupTypes,
     targetField: string,
-    tableNameforColumnLookup: string,
+    tableName: string,
     
     // local variables
     tables?: ITable[],

@@ -9,12 +9,6 @@ import * as React from "react";
     column = "1"
 }
 
-export enum tableTypeSources {
-    static = "0",
-    dynamic = "1"
-}
-
-
 // STYLES
 
 export const dropdownStyles = {

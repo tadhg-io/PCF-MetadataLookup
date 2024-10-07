@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="TOC" constructor="MetadataLookup" version="0.0.1" display-name-key="MetadataLookup" description-key="MetadataLookup description" control-type="virtual" >
+  <control namespace="TOC" constructor="MetadataLookup" version="1.1.0" display-name-key="MetadataLookup" description-key="MetadataLookup description" control-type="virtual" >
     <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
     If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
     Example1:
@@ -17,19 +17,33 @@
       <domain></domain>
       -->
     </external-service-usage>
+    
+    <!-- INPUTS -->
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
-    <!--
-      Property node's of-type attribute can be of-type-group attribute.
-      Example:
-      <type-group name="numbers">
-        <type>Whole.None</type>
-        <type>Currency</type>
-        <type>FP</type>
-        <type>Decimal</type>
-      </type-group>
-      <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
-    -->
+       
+    <!-- Target Field -->
+    <property name="TargetField" display-name-key="Table Target Field" 
+      description-key="The text field in which to write the table or column name, once selected." 
+      of-type="SingleLine.Text" usage="bound" required="false" />
+
+    <!-- Lookup Type -->
+    <property name="LookupType" display-name-key="Lookup Type" description-key="Select whether to render a Table or a column lookup." 
+      of-type="Enum" usage="input" required="true" default-value="0">
+      <value name="Table" display-name-key="Table" description-key="Table Lookup">0</value>
+      <value name="Column" display-name-key="Column" description-key="Column Lookup">1</value>
+    </property>
+    
+    <!-- Table Name -->
+    <property name="TableName" display-name-key="TableName" 
+      description-key="The Logical Name of The Table to select a column from." 
+      of-type="SingleLine.Text" usage="input" required="false" />
+   
+   
+    <type-group name="SupportedFields">
+      <type>SingleLine.Text</type>
+    </type-group>
+
+
     <resources>
       <code path="index.ts" order="1"/>
       <platform-library name="React" version="16.8.6" />
