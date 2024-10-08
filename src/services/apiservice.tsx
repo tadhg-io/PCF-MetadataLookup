@@ -23,9 +23,8 @@ export class ApiService {
             "</fetch>",
         ].join("");
 
-        let odataUrl = `?fetchXml=${fetchXml}`;
-        let results = this._context.webAPI.retrieveMultipleRecords("entity", odataUrl);    
--       console.log('RESULTS', results);
+        let odataUrl = `?fetchXml=${fetchXml}`;   
+        return this._context.webAPI.retrieveMultipleRecords("entity", odataUrl);
         
         // TEMP for local testing
         return [{
@@ -42,6 +41,11 @@ export class ApiService {
             logicalname: "user",
             originallocalizedname: "user",
             name: "User"
+        }, 
+        {
+            logicalname: "activity",
+            originallocalizedname: "activity",
+            name: "Activity"
         }]
 
     };
