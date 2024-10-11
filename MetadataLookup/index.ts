@@ -43,19 +43,13 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
 		this._context = context;
 		this._apiService = new ApiService(this._context);
         
-        let currentPageContext = context as any;
-		currentPageContext = currentPageContext ? currentPageContext["page"] : undefined;
-		if (currentPageContext && currentPageContext.entityId) {
-			this.props.context = this._context;
-			this.props.apiService = this._apiService;
-		}
-		
 		// get the inputs from the form setup
 		this.props.lookupType = <lookupTypes>context.parameters.LookupType.raw || "";
 		this.props.targetField = context.parameters.TargetField.raw || "";
 		this.props.tableName = context.parameters.TableName.raw || "0";
 
-		// set the api service to pass through to the component
+		// set the api service and context to pass through to the component
+        this.props.context = this._context;
 		this.props.apiService = this._apiService;
     }
 
@@ -65,13 +59,10 @@ export class MetadataLookup implements ComponentFramework.ReactControl<IInputs, 
      * @returns ReactElement root react element for the control
      */
     public updateView(context: ComponentFramework.Context<IInputs>): React.ReactElement {
-        const props: IMetadataLookupProps = { 
-            lookupType: lookupTypes.table,
-            targetField: "toc_fieldname",
-            tableName: "toc_table"
-         };
+        
         return React.createElement(
-            MetadataLookupControl, props
+            MetadataLookupControl, 
+            this.props
         );
     }
 

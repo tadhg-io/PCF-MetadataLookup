@@ -49,7 +49,7 @@ export class MetadataLookupControl extends React.Component<IMetadataLookupProps,
     }
   }
 
-  populateTablesArray = () => {
+  populateTablesArray = async () => {
     const self = this;
     console.log("populateTablesArray()");
 
